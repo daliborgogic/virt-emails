@@ -1,6 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-
-const filter = require('./src/plugin')
+const { filters } = require('./src/filters')
 
 module.exports = {
   module: {
@@ -11,20 +10,7 @@ module.exports = {
           'html-loader',
           {
             loader: 'pug-plain-loader',
-            options: {
-              filters: {
-                stylus: function (str, opts) {
-                  let ret
-                  str = str.replace(/\\n /g, '')
-                  const styl = require('stylus')
-                  styl(str, opts).render(function (err, css) {
-                    if (err) throw err
-                    ret = css.replace(/\s/g, '')
-                  })
-                  return '\n<style>' + ret + '</style>'
-                }
-              }
-            }
+            options: { filters }
           }
         ]
       },

@@ -1,37 +1,31 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
-const { filters } = require('./src/filters')
 
-module.exports = (env, argv) => {
-  const isDev =  argv.mode === 'development'
-
-  return {
-    module: {
-      rules: [
-        {
-          test: /\.pug$/,
-          use: [
-            'html-loader',
-            {
-              loader: 'pug-plain-loader',
-              options: { filters }
-            }
-          ]
-        },
-        {
-          test: /\.styl$/,
-          use: [
-            'css-loader',
-            'stylus-loader'
-          ]
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
         }
-      ]
-    },
-    plugins: [
-      new HtmlWebPackPlugin({
-        template: './src/index.pug',
-        filename: './index.html',
-        inject: isDev
-      })
+      },
+
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader',
+            options: { minimize: true }
+          }
+        ]
+      }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebPackPlugin({
+      template: './src/index.html',
+      filename: './index.html'
+    })
+  ]
 }

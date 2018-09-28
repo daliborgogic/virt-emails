@@ -1,6 +1,6 @@
-import { test } from './apply.js'
+import test from './apply.js'
 const data = {
-  title: 'Senior Analyst',
+  title: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. ',
   department: 'Analytics',
   office: 'Brooklyn, NY',
   firstName: 'John',
